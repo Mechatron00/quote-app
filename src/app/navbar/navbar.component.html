@@ -1,0 +1,74 @@
+<mat-sidenav-container [hasBackdrop]="true" class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === true"
+  >
+    <mat-toolbar style="display: flex; align-items: end; justify-content: end">
+      <div>
+        <button
+          style="color: black"
+          type="button"
+          (click)="drawer.toggle()"
+          mat-icon-button
+        >
+          <mat-icon
+            ><span class="material-symbols-outlined">
+              arrow_back_ios_new
+            </span></mat-icon
+          >
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-nav-list>
+      <!-- <button  matTooltip="Load quote" style="color: black" type="button" mat-icon-button (click)="changeCategory()">
+        <mat-icon
+          ><span  class="material-symbols-outlined"> refresh </span></mat-icon
+        >
+      </button> -->
+      <form [formGroup]="categoryForm" class="example-form">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Category</mat-label>
+          <input
+            type="text"
+            placeholder="Pick one"
+            matInput
+            formControlName="category"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of options"
+              [value]="option"
+              (click)="changeCategory()"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>
+        <button
+          matTooltip="menu"
+          type="button"
+          (click)="drawer.toggle()"
+          mat-icon-button
+        >
+          <mat-icon aria-label="Side nav toggle icon"
+            ><span class="material-symbols-outlined"> menu </span></mat-icon
+          >
+        </button></span
+      >
+      <div class="app-heading"><div>Random - Quote</div></div>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <app-quote [category]="category"></app-quote>
+  </mat-sidenav-content>
+</mat-sidenav-container>
